@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Queue;
+use App\Ai\Agents\SalesCoach;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
-use Laravel\Ai\Text;
 
 Route::view('/', 'welcome')->name('home');
 
@@ -13,3 +11,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 
+
+
+
+
+
+
+
+
+
+
+Route::get('/call/ai', function () {
+    $response = SalesCoach::prompt('Analyze this sales call and give feedback');
+
+    return (string) $response;
+});
