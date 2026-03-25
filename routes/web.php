@@ -13,3 +13,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 
+Route::view('/form', 'form');
+
+Route::post('/submit', function () {
+    return 'Form submitted safely!';
+})->middleware('prevent-request-forgery');
