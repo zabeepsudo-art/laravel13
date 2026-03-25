@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Jobs\ProcessPodcast;
+use App\Jobs\SendEmail;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+
+        Queue::route(ProcessPodcast::class, connection: 'redis', queue: 'podcasts');
+        
+        Queue::route(SendEmail::class, connection: 'redis', queue: 'emails');
     }
 
     /**
